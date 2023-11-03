@@ -33,7 +33,7 @@ class TextFormFieldSearchBar extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SearchResultPage(_searchText: value)));
+                  builder: (context) => SearchResultPage(searchText: value)));
           Logger().d("searchText : ${value}");
         },
       ),

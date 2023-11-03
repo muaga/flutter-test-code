@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_test/widgets/real/result/ex_body.dart';
 
 class SearchResultPage extends StatefulWidget {
-  final String _searchText;
-  const SearchResultPage({super.key, required this._searchText});
+  final String searchText;
+  const SearchResultPage({super.key, required this.searchText});
 
   @override
   State<SearchResultPage> createState() => _SearchResultPageState();
@@ -28,7 +28,7 @@ class _SearchResultPageState extends State<SearchResultPage>
 
   @override
   Widget build(BuildContext context) {
-    String _searchText = widget._searchText;
+    String _searchText = widget.searchText;
     return Scaffold(
       // 페이지 화면
       appBar: AppBar(
