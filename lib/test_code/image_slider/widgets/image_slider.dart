@@ -28,7 +28,7 @@ class _ImageSliderState extends State<ImageSlider> {
               return Container(
                 width: MediaQuery.of(context).size.width,
                 child: Image(
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitHeight,
                   image: AssetImage(
                     "assets/${imgLink}",
                   ),
