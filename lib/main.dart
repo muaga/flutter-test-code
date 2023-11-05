@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_test/test_code/image_slider/slider_widget.dart';
+import 'package:flutter_widget_test/test_code/image_slider/all_slider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: SliverWidget(),
+      debugShowCheckedModeBanner: false,
+      home: EnlargeStrategyZoomDemo(),
     );
   }
 }

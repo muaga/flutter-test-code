@@ -1,8 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_test/constants/color.dart';
-import 'package:flutter_widget_test/constants/font.dart';
 import 'package:flutter_widget_test/constants/size.dart';
+import 'package:flutter_widget_test/model/book.dart';
+import 'package:flutter_widget_test/test_code/image_slider/widgets_ranking/book_slider.dart';
+import 'package:flutter_widget_test/test_code/image_slider/widgets_ranking/slider_indicator.dart';
 
 class SliverWidget extends StatefulWidget {
   const SliverWidget({Key? key}) : super(key: key);
@@ -14,145 +15,129 @@ class SliverWidget extends StatefulWidget {
 class _SliverWidgetState extends State<SliverWidget> {
   int _current = 0;
   final CarouselController _controller = CarouselController();
-  List imageList = [
-    "https://cdn.pixabay.com/photo/2014/04/14/20/11/pink-324175_1280.jpg",
-    "https://cdn.pixabay.com/photo/2014/02/27/16/10/flowers-276014_1280.jpg",
-    "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_1280.jpg",
-    "https://cdn.pixabay.com/photo/2015/06/19/20/13/sunset-815270_1280.jpg",
+
+  List<Book> rankingBooks = [
+    Book(
+        id: 1,
+        rankingId: 1,
+        title: "트렌드 코리아 2024",
+        writer: "김난도, 전미영, 최지혜, 이수진, 권정윤, 한다혜, 이준영, 이향은, 이혜원, 추예린, 전다현",
+        titleIntro: "국내 최고 트렌드 전망서",
+        intro: "청룡의 해, 2024년을 분석하다",
+        bookPicUrl: "book8.png",
+        stateIcon: Icons.arrow_drop_up),
+    Book(
+        id: 2,
+        rankingId: 2,
+        title: "퓨처셀프",
+        writer: "벤저민 하디",
+        bookPicUrl: "book8.png"),
+    Book(
+        id: 3,
+        rankingId: 3,
+        title: "시대예보:핵개인의 시대",
+        writer: "송길영",
+        bookPicUrl: "book8.png"),
+    Book(
+        id: 4,
+        rankingId: 4,
+        title: "설자은, 금성으로 돌아오다",
+        writer: "정세랑",
+        bookPicUrl: "book8.png",
+        stateIcon: Icons.arrow_drop_down),
+    Book(
+        id: 5,
+        rankingId: 5,
+        title: "책으로 가는 문",
+        writer: "미야자키 하야오",
+        bookPicUrl: "book8.png",
+        titleIntro: "상상력의 거장, 미야자키 하야오의 독서 에세이",
+        intro: "그의 판타지 세계를 이끌어낸 50권의 책"),
+    Book(
+        id: 6,
+        rankingId: 6,
+        title: "로마 이야기",
+        writer: "줌파 라히리",
+        bookPicUrl: "book8.png",
+        stateIcon: Icons.arrow_drop_up),
+    Book(
+        id: 7,
+        rankingId: 7,
+        title: "문과 남자의 과학 공부",
+        writer: "유시민",
+        bookPicUrl: "book8.png",
+        titleIntro: "나는 무엇이고 왜 존재하며 어디로 가는가"),
+    Book(
+        id: 8,
+        rankingId: 8,
+        title: "아주 희미한 빛으로",
+        writer: "최은영",
+        bookPicUrl: "book8.png",
+        stateIcon: Icons.arrow_drop_down),
+    Book(
+        id: 9,
+        rankingId: 9,
+        title: "역행자",
+        writer: "자청",
+        bookPicUrl: "book8.png",
+        stateIcon: Icons.arrow_drop_up),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Carousel Slide'),
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 300,
-            child: Stack(
-              children: [
-                sliderWidget(),
-                // textSliderWidget(),
-              ],
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            SizedBox(height: gapLarge),
+            BookSlider(
+                controller: _controller,
+                rankingBooks: rankingBooks,
+                funPageChanged: (index, reason) {
+                  setState(() {
+                    _current = index;
+                  });
+                }),
+            SizedBox(height: gapLarge),
+            SliderIndicator(
+                controller: _controller,
+                current: _current,
+                rankingBooks: rankingBooks),
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: const Text("Welcome to the carousel slide app",
+                  style: TextStyle(fontSize: 18)),
             ),
-          ),
-          SizedBox(height: gapLarge),
-          sliderIndicator(),
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: const Text("Welcome to the carousel slide app",
-                style: TextStyle(fontSize: 18)),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  Widget sliderWidget() {
-    return CarouselSlider(
-      carouselController: _controller,
-      items: imageList.map(
-        (imgLink) {
-          return Builder(
-            builder: (context) {
-              return Container(
-                width: getScreenWidth(context) * 0.9,
-                decoration: BoxDecoration(
-                  color: kBackWhite,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: kFontLightGray, // 그림자의 색상
-                      offset: Offset(0, 1), // 그림자의 위치 (x, y)
-                      blurRadius: 5.0, // 그림자의 흐림 정도
-                      spreadRadius: 2.0, // 그림자의 확산 정도
-                    )
-                  ],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.all(gapMain),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: getScreenWidth(context) * 0.15,
-                            height: getScreenWidth(context) * 0.15,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: kBackLight2Gray),
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    image: AssetImage("assets/book8.png"),
-                                    fit: BoxFit.cover)),
-                          ),
-                          Column(
-                            children: [
-                              Text("1", style: title1()),
-                              Icon(Icons.arrow_drop_up),
-                            ],
-                          ),
-                          Container(
-                            width: getScreenWidth(context) * 0.5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("트렌드 코리아 2024",
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1),
-                                Text(
-                                    "김난도, 전미영, 최지혜, 이수진, 권정윤, 한다혜, 이준영, 이향은, 이혜원, 추예린, 전다현",
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
-      ).toList(),
-      options: CarouselOptions(
-        height: 300,
-        viewportFraction: 1.0,
-        autoPlay: false,
-        // autoPlayInterval: const Duration(seconds: 4),
-        onPageChanged: (index, reason) {
-          setState(() {
-            _current = index;
-          });
-        },
-      ),
-    );
-  }
-
-  Widget sliderIndicator() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: imageList.asMap().entries.map((entry) {
-          return GestureDetector(
-            onTap: () => _controller.animateToPage(entry.key),
-            child: Container(
-              width: getScreenWidth(context) * 0.15,
-              height: 2,
-              decoration: BoxDecoration(
-                // shape: BoxShape.circle,
-                color:
-                    Colors.black.withOpacity(_current == entry.key ? 0.9 : 0.1),
-              ),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
+  // Widget sliderWidget() {
+  //   return CarouselSlider(
+  //     carouselController: _controller,
+  //     items: imageList.map(
+  //       (imgLink) {
+  //         return Builder(
+  //           builder: (context) {
+  //             return RankingBookForm();
+  //           },
+  //         );
+  //       },
+  //     ).toList(),
+  //     options: CarouselOptions(
+  //       height: 90,
+  //       viewportFraction: 1.0,
+  //       autoPlay: false,
+  //       // autoPlayInterval: const Duration(seconds: 4),
+  //       onPageChanged: (index, reason) {
+  //         setState(() {
+  //           _current = index;
+  //           _controller.jumpToPage(index); // 페이지 인덱스 동기화
+  //         });
+  //       },
+  //     ),
+  //   );
+  // }
 }
